@@ -3,12 +3,16 @@
     <section class="game-board">
     <Card v-for="(card, index) in cardList"
     :key="`card-${index}`"
-    :value="card"
+    :value="card.value"
+    :visible="card.visible"
+    :position="card.position"
+    @select-card="flipCard"
     />
     </section>
 </template>
 
 <script>
+import { ref } from 'vue'
 import Card from './components/Card-File'
 
 export default {
@@ -17,13 +21,22 @@ export default {
     Card
   },
   setup() {
-    const cardList = []
+    const cardList = ref([])
 
     for (let i = 0; i< 16; i++) {
-      cardList.push(i)
+      cardList.value.push({
+        value: i,
+        visible: false,
+        position: i
+      })
+    }
+
+    const flipCard = (payload) => {
+      cardList.value[payload.position].visible = true
     }
     return {
-      cardList
+      cardList,
+      flipCard
     }
   }
 
@@ -40,9 +53,6 @@ export default {
   margin-top: 60px;
 }
 
-.card {
-  border: 5px solid rgb(171,219,227);
-}
 
 .game-board {
   display: grid;
