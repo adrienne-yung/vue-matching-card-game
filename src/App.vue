@@ -11,9 +11,11 @@
     />
     </section>
     <h2>{{ status }}</h2>
+    <button @click="restartGame">Restart Game</button>
 </template>
 
 <script>
+import _ from 'lodash'
 import { computed, ref, watch } from 'vue'
 import Card from './components/Card-File'
 
@@ -38,6 +40,22 @@ export default {
 
       return remainingCards / 2
     })
+
+    const shuffleCards = () => {
+      cardList.value = _.shuffle(cardList.value)
+    }
+
+    const restartGame = () => {
+      shuffleCards()
+      cardList.value = cardList.value.map((card, index) => {
+        return {
+          ...card,
+          matched: false,
+          visible: false,
+          position: index
+        }
+      })
+    }
 
     for (let i = 0; i< 16; i++) {
       cardList.value.push({
@@ -64,11 +82,11 @@ export default {
         const cardTwo = currentValue[1]
 
         if (cardOne.faceValue === cardTwo.faceValue) {
-          status.value = "Matched!"
+
           cardList.value[cardOne.position].matched = true
           cardList.value[cardTwo.position].matched = true
         } else {
-          status.value = "Mismatched!"
+
           cardList.value[cardOne.position].visible = false
           cardList.value[cardTwo.position].visible = false
         }
@@ -83,7 +101,9 @@ export default {
       cardList,
       flipCard,
       userSelect,
-      status
+      status,
+      shuffleCards,
+      restartGame
     }
   }
 
