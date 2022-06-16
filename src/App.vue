@@ -57,20 +57,39 @@ export default {
       })
     }
 
-    for (let i = 0; i< 16; i++) {
+    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8]
+    cardItems.forEach(item => {
       cardList.value.push({
-        value: 8,
+        value: item,
         visible: false,
-        position: i,
+        position: null,
         matched: false
       })
-    }
+
+      cardList.value.push({
+        value: item,
+        visible: false,
+        position: null,
+        matched: false
+      })
+    })
+
+    cardList.value = cardList.value.map((card, index) => {
+      return {
+        ...card,
+        position: index
+      }
+    })
 
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true
 
       if (userSelect.value[0]) {
-        userSelect.value[1] = payload
+        if ((userSelect.value[0].position === payload.position) && (userSelect.value[0].faceValue === payload.faceValue)) {
+          return
+        } else {
+          userSelect.value[1] = payload
+        }
       } else {
         userSelect.value[0] = payload
       }
@@ -86,9 +105,11 @@ export default {
           cardList.value[cardOne.position].matched = true
           cardList.value[cardTwo.position].matched = true
         } else {
-
+          setTimeout(() => {
           cardList.value[cardOne.position].visible = false
           cardList.value[cardTwo.position].visible = false
+          }, 2000)
+
         }
 
 
