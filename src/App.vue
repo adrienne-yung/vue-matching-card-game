@@ -1,5 +1,5 @@
 <template>
-  <h1>Summer Vue</h1>
+  <h1 class="header-margin">Summer Vue</h1>
     <section class="game-board">
     <Card v-for="(card, index) in cardList"
     :key="`card-${index}`"
@@ -57,7 +57,7 @@ export default {
       })
     }
 
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8]
+    const cardItems = ['waves-1', 'waves-2', 'waves-3', 'waves-4', 'waves-5', 'waves-6', 'waves-7', 'waves-8']
     cardItems.forEach(item => {
       cardList.value.push({
         value: item,
@@ -132,22 +132,37 @@ export default {
 </script>
 
 <style>
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-image: url('assets/images/beachbackground.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100vw 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 
 .game-board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 120px);
+  grid-column-gap: 25px;
+  grid-template-rows: repeat(4, 120px);
+  grid-row-gap: 25px;
   justify-content: center;
+}
+
+h1 {
+  margin-top: 0;
+  padding-top: 5%;
 }
 </style>

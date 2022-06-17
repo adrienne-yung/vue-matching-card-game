@@ -11,7 +11,7 @@ export default {
       required: true
     },
     value: {
-      type: Number,
+      type: String,
       required: true
     },
     visible : {
@@ -38,10 +38,10 @@ export default {
 
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      {{ value }} - {{ position }} - {{ matched }}
+      <img :src="`../assets/images/${value}.jpg`" :alt="value" />
+      <img v-if="matched" src="../assets/images/done.svg"  class="icon-checkmark" />
     </div>
         <div v-else class="card-face is-back">
-      Back
     </div>
   </div>
 
@@ -50,24 +50,37 @@ export default {
 <style>
 
   .card {
-  border: 5px solid rgb(171,219,227);
-  position: relative;
+    position: relative;
   }
 
   .card-face {
     width: 100%;
     height: 100%;
     position: absolute;
+    border-radius: 8px;
   }
 
   .card-face.is-front {
-    background-color: red;
+    background-image: url('../assets/images/card-bg.jpg');
     color: white;
+
   }
 
   .card-face.is-back {
-    background-color: blue;
+    background-image: url('../assets/images/popsicle-background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
     color: white;
+
+  }
+
+  .icon-checkmark {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 18%;
+    height: 16%;
   }
 
 </style>
